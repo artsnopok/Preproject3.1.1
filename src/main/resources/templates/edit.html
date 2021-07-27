@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Изменение данных пользователя</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/admin/users/{id}(id=${user.getId()})}" th:object="${user}">
+    <label for="name">Введите имя: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+    <br/>
+    <label for="surname">Введите фамилию: </label>
+    <input type="text" th:field="*{surname}" id="surname"/>
+    <span style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</span>
+    <br/>
+    <label for="age">Введите возраст: </label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <span style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</span>
+    <br/>
+    <label for="email">Введите email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+    <br/>
+    <label for="password">Введите password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <span style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+    <br/>
+    <input type="checkbox" th:field="*{roles}" th:text="Администратор" th:value="${roleAdmin.getName()}">
+    <input type="checkbox" th:field="*{roles}" th:text="Пользователь" th:value="${roleUser.getName()}">
+    <span style="color: red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">roles error</span>
+    <br/>
+    <input type="submit" value="Изменить!"/>
+</form>
+<br/>
+<br/>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="Выйти"/>
+</form>
+
+</body>
+</html>

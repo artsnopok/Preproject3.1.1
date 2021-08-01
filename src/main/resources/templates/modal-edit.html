@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div th:fragment="modal-edit" class="modal fade" id="editUser" tabindex="-1" role="dialog"
+<div th:fragment="modal-edit" class="modal fade" th:id="'userEdit'+${user.getId()}" tabindex="-1" role="dialog"
      aria-labelledby="editUserLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
@@ -20,36 +20,40 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form th:method="POST" th:action="@{/admin/update}" th:object="${user}">
+            <form th:id="'form'+${user.getId()}" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}" th:method="put">
                 <div class="col-auto mx-auto">
                     <div class="modal-body text-center">
                         <div class="form-group">
                             <label class="font-weight-bold m-0">ID</label>
-                            <input disabled type="text" class="form-control" th:field="*{id}">
+                            <input disabled type="text" class="form-control" th:value="*{id}" name="id">
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold m-0">First name</label>
-                            <input type="text" class="form-control" th:field="*{name}">
+                            <label th:value="*{name}" class="font-weight-bold m-0">First name</label>
+                            <input type="text" class="form-control" th:value="*{name}" name="name" required>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Last name</label>
-                            <input type="text" class="form-control" th:field="*{surname}">
+                            <input type="text" class="form-control" th:value="*{surname}" name="surname" required>
+
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Age</label>
-                            <input type="number" class="form-control" th:field="*{age}">
+                            <input type="number" class="form-control" th:value="*{age}" name="age" required>
+
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Email</label>
-                            <input type="email" class="form-control" th:field="*{email}">
+                            <input type="email" class="form-control" th:value="*{email}" name="email" required>
+
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Password</label>
-                            <input type="password" class="form-control" th:field="*{password}">
+                            <input type="password" class="form-control" th:value="*{password}" name="password" required>
+
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Role</label>
-                            <select multiple class="custom-select" size="2" th:field="*{roles}">
+                            <select multiple class="custom-select" size="2" th:value="*{roles}" name="roles" required>
                                 <option th:text="${roleAdmin.getName().substring(5)}"
                                         th:value="${roleAdmin.getName()}"></option>
                                 <option th:text="${roleUser.getName().substring(5)}"
@@ -60,7 +64,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <button type="submit" class="btn btn-primary" th:form="'form'+${user.getId()}">Edit</button>
                 </div>
             </form>
         </div>

@@ -46,19 +46,6 @@ public class AdminController {
         return "show";
     }
 
-    @PutMapping("update")
-    public String editUser(@ModelAttribute("user") User user) {
-        userService.update(user);
-        return "redirect:/admin/users";
-    }
-//    @GetMapping("new")
-//    public String newPerson(@ModelAttribute("user") User user,
-//                            Model model) {
-//        model.addAttribute("roleAdmin", userService.findRoleById(1L));
-//        model.addAttribute("roleUser", userService.findRoleById(2L));
-//        return "new";
-//    }
-
     @PostMapping("/users")
     public String create(@ModelAttribute("user") @Valid User user,
                          BindingResult bindingResult, Model model) {
@@ -72,37 +59,18 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-//    @GetMapping("users/{id}/edit")
-//    public String edit(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("user", userService.show(id));
-//        model.addAttribute("roleAdmin", userService.findRoleById(1));
-//        model.addAttribute("roleUser", userService.findRoleById(2));
-//        return "edit";
-//    }
-//
-//    @PatchMapping("users/{id}")
-//    public String update(@ModelAttribute("user") @Valid User user,
-//                         BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("roleAdmin", userService.findRoleById(1));
-//            model.addAttribute("roleUser", userService.findRoleById(2));
-//            return "edit";
-//        }
-//        userService.refreshRoles(user);
-//        userService.update(user);
-//        return "redirect:/admin/users";
-//    }
-
-//    @DeleteMapping("users/{id}")
-//    public String delete(@PathVariable("id") int id) {
-//        userService.delete(id);
-//        return "redirect:/admin/users";
-//    }
-
-    @DeleteMapping("users/delete")
-    public String deleteUser(@ModelAttribute("user") User user) {
-        userService.delete(user.getId());
+    @PutMapping("{id}")
+    public String update(@ModelAttribute("user") User user) {
+        userService.refreshRoles(user);
+        userService.update(user);
         return "redirect:/admin/users";
     }
+
+    @DeleteMapping("delete/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userService.delete(id);
+        return "redirect:/admin/users";
+    }
+
 
 }

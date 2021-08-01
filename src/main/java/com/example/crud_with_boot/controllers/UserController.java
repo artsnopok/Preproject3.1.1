@@ -2,6 +2,8 @@ package com.example.crud_with_boot.controllers;
 
 import com.example.crud_with_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,10 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails user, Model model) {
         model.addAttribute("user", userService.show(id));
         model.addAttribute("role", userService.findRoleById(id));
-        return "showUser";
+        model.addAttribute("authUser", user);
+        return "showRoleUser";
     }
 }

@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>User information-page</title>
+    <title>Admin panel</title>
 </head>
 <body>
+<div th:replace="~{modal-edit :: modal-edit}"/>
+<div th:replace="~{modal-delete :: modal-delete}"/>
+
+<!--ВЕРХНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
 <nav class="navbar navbar-dark bg-dark">
     <div>
         <span class="navbar-text font-weight-bold text-white" th:text="${authUser.getUsername()}">asdasd</span>
@@ -28,59 +32,45 @@
 </nav>
 <!--БОКОВАЯ ПАНЕЛЬ-->
 <div class="row">
-    <div class="col-2 pt-4 pr-0">
+    <div class="col pt-4 pr-0">
         <div class="nav nav-pills flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="/admin/users">Admin</a>
+                <a class="nav-link active" href="/admin/users">Admin</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="#">User</a>
+                <a class="nav-link" th:href="@{/admin/users/{id}(id=${user.getId()})}">User</a>
             </li>
         </div>
     </div>
-
+    <!--ВНУТРЕННЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
     <div class="col-10 bg-light vh-100">
         <div class="p-3 justify-content-center">
-            <h1 class="pb-3">User information-page</h1>
+            <h1 class="pb-3">Admin panel</h1>
+            <div>
+                <div class="mr-3">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                               aria-controls="home" aria-selected="true">Users table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                               aria-controls="profile" aria-selected="false">New user</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
             <div class="mr-3 border rounded-lg bg-white">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <h5 class="bg-light p-2 border-bottom">All users</h5>
-                        <div class="p-4 mx-auto">
-                            <table class="bg-white table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td th:utext="${userInfo.getId}">id</td>
-                                    <td th:utext="${userInfo.getName}">name</td>
-                                    <td th:utext="${userInfo.getSurname}">surname</td>
-                                    <td th:utext="${userInfo.getAge}">age</td>
-                                    <td th:utext="${userInfo.getEmail}">email</td>
-                                    <td>
-                                        <span th:each="role:${userInfo.getRoles()}">
-                                            <span th:text="${role.getName().substring(5)}"></span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <div th:replace="users-table :: users-table"/>
+                    <div th:replace="new-user :: new-user"/>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

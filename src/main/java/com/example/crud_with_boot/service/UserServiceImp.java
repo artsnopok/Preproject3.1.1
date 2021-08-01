@@ -50,8 +50,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean update(User user) {
-        if (user.getPassword().equals(userDao.show(user.getId()).getPassword())) {
-        } else {
+        if (!user.getPassword().equals(userDao.show(user.getId()).getPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         userDao.update(user);
@@ -83,9 +82,17 @@ public class UserServiceImp implements UserService {
         return userDao.findUserByEmail(email);
     }
 
+    @Override
     public void refreshRoles(User user) {
         Set<Role> refreshedRoles = new HashSet<>();
         user.getRoles().forEach(r -> refreshedRoles.add(roleDao.findRoleByName(r.getName())));
         user.setRoles(refreshedRoles);
     }
+
+    @Override
+    public List<Role> getRoles() {
+        return roleDao.getRoles();
+    }
+
+
 }

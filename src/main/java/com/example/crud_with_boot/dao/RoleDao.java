@@ -7,7 +7,7 @@ import com.example.crud_with_boot.models.Role;
 import java.util.List;
 
 public interface RoleDao {
-    List<Role> index();
+    List<Role> getRoles();
 
     Role findRoleById(long id);
 

@@ -19,17 +19,14 @@ import java.util.Set;
 public class UserServiceImp implements UserService {
 
     private final UserDao userDao;
-    private final RoleDao roleDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Autowired
-    public UserServiceImp(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImp(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
-        this.roleDao = roleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
 
     @Override
     public List<User> index() {
@@ -67,31 +64,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public Role findRoleById(long id) {
-        return roleDao.findRoleById(id);
-    }
-
-    @Override
-    public Role findRoleByName(String name) {
-        return roleDao.findRoleByName(name);
-    }
-
-    @Override
     public User findUserByEmail(String email) {
         return userDao.findUserByEmail(email);
     }
 
-    @Override
-    public void refreshRoles(User user) {
-        Set<Role> refreshedRoles = new HashSet<>();
-        user.getRoles().forEach(r -> refreshedRoles.add(roleDao.findRoleByName(r.getName())));
-        user.setRoles(refreshedRoles);
-    }
 
-    @Override
-    public List<Role> getRoles() {
-        return roleDao.getRoles();
-    }
 
 
 }

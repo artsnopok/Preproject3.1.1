@@ -23,4 +23,9 @@ public class AppViewController {
         return "showRoleUser";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
 }

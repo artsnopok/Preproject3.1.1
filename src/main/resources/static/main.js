@@ -117,32 +117,37 @@ allUsers.addEventListener('click', (e) => {
 // UPDATE - update user
 editModal.addEventListener('submit', (e) => {
     e.preventDefault();
-        fetch(`${url}/${editId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: $('#idEdit').val(),
-                name: $('#nameEdit').val(),
-                surname: $('#surnameEdit').val(),
-                age: $('#ageEdit').val(),
-                email: $('#emailEdit').val(),
-                password: $('#passwordEdit').val(),
-                roles: $('#rolesEdit').val()
-            })
-        })
-            .then(() => {
-                allUsers.innerHTML = '';
-                outputAllUsers = '';
+    let user = {
+        id: $('#idEdit').val(),
+        name: $('#nameEdit').val(),
+        surname: $('#surnameEdit').val(),
+        age: $('#ageEdit').val(),
+        email: $('#emailEdit').val(),
+        password: $('#passwordEdit').val(),
+        roles: $('#rolesEdit').val()
+    }
 
-                fetch(url)
-                    .then(res => res.json())
-                    .then(users => {
-                        return renderMainTable(users)
-                    })
-            })
-        $('#modal-edit').modal('hide');
+    fetch(`${url}/${editId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+        .then(() => {
+            $('#main-name-' + user.id).html(user.name);
+            $('#main-surname-' + user.id).html(user.surname);
+            $('#main-age-' + user.id).html(user.age);
+            $('#main-email-' + user.id).html(user.email);
+            $('#main-roles-' + user.id).empty();
+
+            user.roles.forEach(role => {
+                $('#main-roles-' + user.id).append(`
+                <span>${role.substring(5)}</span>
+            `)
+            });
+        })
+    $('#modal-edit').modal('hide');
 })
 
 // DELETE - delete user
@@ -162,19 +167,20 @@ deleteModal.addEventListener('click', (e) => {
 // POST - create new user
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    let user = {
+        name: $('#nameNewUser').val(),
+        surname: $('#surnameNewUser').val(),
+        age: $('#ageNewUser').val(),
+        email: $('#emailNewUser').val(),
+        password: $('#passwordNewUser').val(),
+        roles: $('#rolesNewUser').val()
+    }
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            name: $('#nameNewUser').val(),
-            surname: $('#surnameNewUser').val(),
-            age: $('#ageNewUser').val(),
-            email: $('#emailNewUser').val(),
-            password: $('#passwordNewUser').val(),
-            roles: $('#rolesNewUser').val()
-        })
+        body: JSON.stringify(user)
     })
         .then(() => {
             allUsers.innerHTML = '';
@@ -187,9 +193,9 @@ addForm.addEventListener('submit', (e) => {
                 })
             clearNewFormField()
             document.getElementById('home-tab').click();
-
         })
 })
+
 
 function clearNewFormField() {
     $('#nameNewUser').val('');

@@ -2,6 +2,7 @@ package com.example.crud_with_boot.controllers;
 
 
 import com.example.crud_with_boot.models.User;
+import com.example.crud_with_boot.service.RoleService;
 import com.example.crud_with_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,13 @@ public class AppRestController {
     public static final String REST_URL = "/api/users";
 
     private final UserService userService;
+    private final RoleService roleService;
 
 
     @Autowired
-    public AppRestController(UserService userService) {
+    public AppRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -40,13 +43,13 @@ public class AppRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> create(@RequestBody User user) {
-        userService.refreshRoles(user);
+        roleService.refreshRoles(user);
         return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user) {
-        userService.refreshRoles(user);
+        roleService.refreshRoles(user);
         userService.update(user);
     }
 

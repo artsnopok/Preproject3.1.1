@@ -12,40 +12,37 @@
 <div th:fragment="new-user" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
   <h5 class="bg-light p-2 border-bottom">Add new user</h5>
   <div class="col-sm-3 mx-auto">
-    <form th:method="POST" th:action="@{/admin/users}" th:object="${user}"
-          class="pt-4 text-center">
+    <form class="pt-4 text-center addUser">
       <div class="form-group">
-        <label for="name" class="font-weight-bold m-0">First name</label>
-        <input type="text" class="form-control" th:field="*{name}" id="name"
+        <label for="nameNewUser" class="font-weight-bold m-0">First name</label>
+        <input required type="text" class="form-control" id="nameNewUser"
                placeholder="First name">
       </div>
       <div class="form-group">
-        <label for="lastname" class="font-weight-bold m-0">Last name</label>
-        <input type="text" class="form-control" th:field="*{surname}" id="lastname"
+        <label for="surnameNewUser" class="font-weight-bold m-0">Last name</label>
+        <input required type="text" class="form-control" id="surnameNewUser"
                placeholder="Last name">
       </div>
       <div class="form-group">
-        <label for="age" class="font-weight-bold m-0">Age</label>
-        <input type="number" class="form-control" th:field="*{age}" id="age"
+        <label for="ageNewUser" class="font-weight-bold m-0">Age</label>
+        <input required type="number" class="form-control" id="ageNewUser"
                placeholder="Age">
       </div>
       <div class="form-group">
-        <label for="email" class="font-weight-bold m-0">Email</label>
-        <input type="email" class="form-control" th:field="*{email}" id="email"
+        <label for="emailNewUser" class="font-weight-bold m-0">Email</label>
+        <input required type="email" class="form-control" id="emailNewUser"
                placeholder="Email">
       </div>
       <div class="form-group">
-        <label for="password" class="font-weight-bold m-0">Password</label>
-        <input type="password" class="form-control" th:field="*{password}" id="password"
+        <label for="passwordNewUser" class="font-weight-bold m-0">Password</label>
+        <input required type="password" class="form-control" id="passwordNewUser"
                placeholder="Password">
       </div>
       <div class="form-group">
         <label class="font-weight-bold m-0">Role</label>
-        <select multiple class="custom-select" size="2" th:field="*{roles}">
-          <option th:text="${roleAdmin.getName().substring(5)}"
-                  th:value="${roleAdmin.getName()}"></option>
-          <option th:text="${roleUser.getName().substring(5)}"
-                  th:value="${roleUser.getName()}"></option>
+        <select required multiple class="custom-select" size="2" id="rolesNewUser">
+          <option value='ROLE_ADMIN'>ADMIN</option>
+          <option value='ROLE_USER'>USER</option>
         </select>
       </div>
       <div class="pb-3">

@@ -9,9 +9,8 @@
 </head>
 <body>
 
-<div th:fragment="modal-delete" class="modal fade" th:id="'userDelete'+${user.getId()}" tabindex="-1" role="dialog"
-     aria-labelledby="deleteUserLabel"
-     aria-hidden="true">
+<div th:fragment="modal-delete" class="modal fade" id='modal-delete' tabindex="-1" role="dialog"
+     aria-labelledby="deleteUserLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,50 +19,45 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form th:id="'formDelete'+${user.getId()}" th:action="@{/admin/delete/{id}(id=${user.getId()})}" th:method="DELETE">
+            <form>
                 <div class="col-auto mx-auto">
-                    <div class="modal-body text-center">
+                    <div class="modal-body  text-center">
                         <div class="form-group">
                             <label class="font-weight-bold m-0">ID</label>
-                            <input disabled type="text" class="form-control" th:value="${user.getId()}">
+                            <input disabled type="text" id="idDelete" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label class="font-weight-bold m-0">First name</label>
-                            <input disabled type="text" class="form-control" th:value="${user.getName()}">
+                            <input disabled type="text" id="nameDelete"  class="form-control">
 
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Last name</label>
-                            <input disabled type="text" class="form-control" th:value="${user.getSurname()}">
+                            <input disabled type="text" id="surnameDelete" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Age</label>
-                            <input disabled type="number" class="form-control" th:value="${user.getAge()}">
+                            <input disabled type="number" id="ageDelete" class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Email</label>
-                            <input disabled type="email" class="form-control" th:value="${user.getEmail()}">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold m-0">Password</label>
-                            <input disabled type="password" class="form-control" th:value="${user.getPassword()}">
+                            <input disabled type="email" id="emailDelete" class="form-control">
                         </div>
 
                         <div class="form-group">
                             <label class="font-weight-bold m-0">Role</label>
-                            <select multiple class="custom-select" size="2" th:value="${user.getRoles()}">
-                                <option th:text="${roleAdmin.getName().substring(5)}"></option>
-                                <option th:text="${roleUser.getName().substring(5)}"></option>
+                            <select disabled multiple class="custom-select" id="rolesDelete" size="2">
+                                <option>ADMIN</option>
+                                <option>USER</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger" th:form="'formDelete'+${user.getId()}">Delete</button>
+                    <button type="submit" id="deleteButton" class="btn modalDelete btn-danger">Delete</button>
                 </div>
             </form>
         </div>

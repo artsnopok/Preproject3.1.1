@@ -27,8 +27,22 @@ public class DataLoader {
         userService.save(new User("admin", "fakeadmin", 0, "admin@admin.in",
                 "admin", Collections.singleton(new Role("ROLE_ADMIN"))));
 
-        userService.save(new User("user", "fakeuser", 0, "user@user.in",
+        userService.save(new User("user", "fakeuser", 0, "user1@user.in",
                 "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user2@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user3@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user4@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user5@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user6@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+        userService.save(new User("user", "fakeuser", 0, "user7@user.in",
+                "user", Collections.singleton(new Role("ROLE_USER"))));
+
+
     }
 }
 

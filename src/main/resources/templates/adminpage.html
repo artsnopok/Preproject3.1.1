@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,7 +15,7 @@
 <!--ВЕРХНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
 <nav class="navbar navbar-dark bg-dark">
     <div>
-        <span class="navbar-text font-weight-bold text-white" th:text="${authUser.getUsername()}">asdasd</span>
+        <span class="navbar-text font-weight-bold text-white" th:text="${authUser.getUsername()}"></span>
         <span class="navbar-text text-white">with roles:</span>
         <span class="navbar-text text-white mr-1" th:each="role : ${authUser.getAuthorities()}">
                 <a th:text="${role.getAuthority().substring(5)}">roles</a>
@@ -32,45 +32,74 @@
 <!--БОКОВАЯ ПАНЕЛЬ-->
 <div class="row">
     <div class="col pt-4 pr-0">
-        <div class="nav nav-pills flex-column">
+        <ul class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <li class="nav-item">
-                <a class="nav-link active" href="/admin/users">Admin</a>
+                <a class="nav-link active" id="adminPanelTab" data-toggle="pill" href="#adminPanel" role="tab"
+                   aria-controls="adminPanel" aria-selected="true">Admin</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/users/{id}(id=${user.getId()})}">User</a>
+                <a class="nav-link" id="singlePanelTab" data-toggle="pill" href="#singlePanel" role="tab"
+                   aria-controls="singlePanel" aria-selected="false">User</a>
             </li>
-        </div>
+        </ul>
     </div>
     <!--ВНУТРЕННЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
     <div class="col-10 bg-light vh-100">
-        <div class="p-3 justify-content-center">
-            <h1 class="pb-3">Admin panel</h1>
-            <div>
-                <div class="mr-3">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                               aria-controls="home" aria-selected="true">Users table</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                               aria-controls="profile" aria-selected="false">New user</a>
-                        </li>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="adminPanel" role="tabpanel" aria-labelledby="adminPanelTab">
+                <div class="p-3 justify-content-center">
+                    <h1 class="pb-3">Admin panel</h1>
+                    <div>
+                        <div class="mr-3">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="true">Users table</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                       aria-controls="profile" aria-selected="false">New user</a>
+                                </li>
 
-                    </ul>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mr-3 border rounded-lg bg-white">
+                        <div class="tab-content" id="myTabContent">
+                            <div th:replace="users-table :: users-table"/>
+                            <div th:replace="new-user :: new-user"/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mr-3 border rounded-lg bg-white">
-                <div class="tab-content" id="myTabContent">
-                    <div th:replace="users-table :: users-table"/>
-                    <div th:replace="new-user :: new-user"/>
+            <div class="tab-pane fade" id="singlePanel" role="tabpanel" aria-labelledby="singlePanelTab">
+                <div class="p-3 justify-content-center">
+                    <h1 class="pb-3">User information-page</h1>
+                    <div class="mr-3 border rounded-lg bg-white">
+                        <h5 class="bg-light p-2 border-bottom">About user</h5>
+                        <div class="p-4 mx-auto">
+                            <table class="bg-white table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Age</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                                </thead>
+                                <tbody class="tbodyUser">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="/static/main.js/" th:src="@{/main.js}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

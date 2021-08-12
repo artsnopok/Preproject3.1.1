@@ -9,7 +9,7 @@ public interface UserDao {
 
     User show(long id);
 
-    boolean save(User user);
+    User save(User user);
 
     void update(User user);
 

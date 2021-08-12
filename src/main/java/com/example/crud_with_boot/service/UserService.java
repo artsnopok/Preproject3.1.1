@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     List<User> index();
     User show(long id);
-    boolean save(User user);
+    User save(User user);
     boolean update(User user);
     void delete(long id);
     Role findRoleById(long id);

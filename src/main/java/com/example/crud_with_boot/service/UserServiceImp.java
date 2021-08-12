@@ -42,10 +42,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public boolean save(User user) {
+    public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.save(user);
-        return true;
+        return userDao.save(user);
     }
 
     @Override

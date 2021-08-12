@@ -14,12 +14,10 @@ import java.util.Collections;
 public class DataLoader {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public DataLoader(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public DataLoader(UserService userService) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostConstruct
